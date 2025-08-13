@@ -24,17 +24,20 @@ if (!fs.existsSync('uploads/assignments')) {
 const app = express();
 const server = http.createServer(app); 
 
-// ⬅️ Setup Socket.IO
+// Setup Socket.IO
 const io = socketIo(server, {
   cors: {
     origin: [
       "https://online-tutor-frontend-gamma.vercel.app",
+      "http://localhost:3000"
     ],
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    credentials: true,
+    transports: ['websocket', 'polling']
   }
 });
 
-// ⬅️ IMPORTANT: Update CORS to match Socket.IO origin
+// IMPORTANT: Update CORS to match Socket.IO origin
 app.use(cors({
   origin: [
     "https://online-tutor-frontend-gamma.vercel.app", 
