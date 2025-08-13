@@ -28,7 +28,7 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: [
-      "https://online-tutor-frontend-ten.vercel.app",
+      "https://online-tutor-frontend-gamma.vercel.app",
     ],
     methods: ["GET", "POST"]
   }
@@ -37,7 +37,7 @@ const io = socketIo(server, {
 // ⬅️ IMPORTANT: Update CORS to match Socket.IO origin
 app.use(cors({
   origin: [
-    "https://online-tutor-frontend-ten.vercel.app", 
+    "https://online-tutor-frontend-gamma.vercel.app", 
     "http://localhost:3000"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
