@@ -3,6 +3,7 @@ const http = require("http");
 const socketIo = require("socket.io"); 
 const dotenv = require("dotenv");
 const cors = require("cors");
+const fs = require('fs'); // Add this import at the top
 const connectDB = require("./config/db");
 
 // Load environment variables
@@ -11,20 +12,34 @@ dotenv.config();
 // Connect to MongoDB
 connectDB();
 
+// Create uploads directory if it doesn't exist
+if (!fs.existsSync('uploads')) {
+  fs.mkdirSync('uploads', { recursive: true });
+}
+
+if (!fs.existsSync('uploads/assignments')) {
+  fs.mkdirSync('uploads/assignments', { recursive: true });
+}
+
 const app = express();
 const server = http.createServer(app); 
 
 // ⬅️ Setup Socket.IO
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: [
+      "https://online-tutor-frontend-ten.vercel.app",
+    ],
     methods: ["GET", "POST"]
   }
 });
 
-// Enable CORS for frontend at localhost:3000
+// ⬅️ IMPORTANT: Update CORS to match Socket.IO origin
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: [
+    "https://online-tutor-frontend-ten.vercel.app", 
+    "http://localhost:3000"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true
 }));
